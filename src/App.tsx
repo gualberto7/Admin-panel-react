@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import MainLayout from './core/layouts/MainLayout';
+import ClassList from './modules/classes/components/ClassList';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,7 +21,7 @@ function App() {
             {/* Add your routes here */}
             <Route index element={<div>Dashboard</div>} />
             <Route path="members" element={<div>Members</div>} />
-            <Route path="classes" element={<div>Classes</div>} />
+            <Route path="classes" element={<ClassList />} />
             <Route path="trainers" element={<div>Trainers</div>} />
             <Route path="subscriptions" element={<div>Subscriptions</div>} />
             <Route path="reports" element={<div>Reports</div>} />
