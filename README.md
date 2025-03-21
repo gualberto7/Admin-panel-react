@@ -42,13 +42,6 @@ src/
 - **Custom Hooks**: For reusable logic
 - **Service Layer Pattern**: For backend communication
 
-### Backend (Laravel)
-
-- RESTful API with Laravel
-- Authentication using Laravel Sanctum (tokens and cookies)
-- MVC Architecture
-- Repository Pattern for data access
-
 ## 🛠 Technologies and Dependencies
 
 ### Frontend
@@ -68,6 +61,7 @@ src/
 - **Laravel**: PHP framework
 - **Laravel Sanctum**: Authentication
 - **MySQL**: Database
+- See more [here](https://github.com/gualberto7/gym-management-api)
 
 ## 🚦 Development Status
 
