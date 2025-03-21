@@ -1,7 +1,6 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
 import {
-  Bars3Icon,
   HomeIcon,
   UsersIcon,
   CalendarIcon,
@@ -11,6 +10,9 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { authService } from '../../modules/auth/services/auth.service';
+import AppHeader from '../components/AppHeader';
 import clsx from 'clsx';
 
 const navigation = [
@@ -26,6 +28,22 @@ export default function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
+  const { data: profile } = useQuery({
+    queryKey: ['auth-profile'],
+    queryFn: async () => {
+      const response = await authService.getProfile();
+      return response.data;
+    },
+  });
+
+  useEffect(() => {
+    const handleToggleSidebar = () => setSidebarOpen(true);
+    document.addEventListener('toggle-sidebar', handleToggleSidebar);
+    return () => {
+      document.removeEventListener('toggle-sidebar', handleToggleSidebar);
+    };
+  }, []);
+
   return (
     <>
       <div>
@@ -40,7 +58,7 @@ export default function MainLayout() {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-gray-900/80" />
+              <div className="fixed inset-0 bg-[var(--color-gray-900)]/80" />
             </TransitionChild>
 
             <div className="fixed inset-0 flex">
@@ -67,6 +85,9 @@ export default function MainLayout() {
                         src="/logo.svg"
                         alt="GymAdmin"
                       />
+                      <span className="ml-2 text-xl font-semibold text-[var(--color-gray-900)]">
+                        GymAdmin
+                      </span>
                     </div>
                     <nav className="flex flex-1 flex-col">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -109,14 +130,16 @@ export default function MainLayout() {
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-[var(--color-gray-200)] bg-white px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
               <img
                 className="h-8 w-auto"
                 src="/logo.svg"
                 alt="GymAdmin"
               />
-              <span className="ml-2 text-xl font-semibold text-gray-900">GymAdmin</span>
+              <span className="ml-2 text-xl font-semibold text-[var(--color-gray-900)]">
+                GymAdmin
+              </span>
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -154,27 +177,7 @@ export default function MainLayout() {
         </div>
 
         <div className="lg:pl-72">
-          <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-            <button
-              type="button"
-              className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <span className="sr-only">Abrir sidebar</span>
-              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-            </button>
-
-            <div className="h-6 w-px bg-gray-200 lg:hidden" aria-hidden="true" />
-
-            <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-              <div className="flex flex-1">
-                <h1 className="text-2xl font-semibold text-gray-900">
-                  {navigation.find(item => item.href === location.pathname)?.name || 'Dashboard'}
-                </h1>
-              </div>
-            </div>
-          </div>
-
+          <AppHeader user={profile} />
           <main className="py-10">
             <div className="px-4 sm:px-6 lg:px-8">
               <Outlet />
