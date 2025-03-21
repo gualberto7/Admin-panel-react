@@ -1,54 +1,151 @@
-# React + TypeScript + Vite
+# GymAdmin - Gym Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+GymAdmin is a modern web application built with React and Laravel, designed for comprehensive gym management. It enables efficient management of members, classes, trainers, memberships, and generates insightful reports.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Member and membership management
+- Class scheduling and control
+- Trainer administration
+- Reporting and analytics system
+- Secure authentication with Laravel Sanctum
+- Modern and responsive interface
 
-## Expanding the ESLint configuration
+## 🏗 Architecture and Design Patterns
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Frontend (React)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+The application is structured following a modular architecture, with the following features:
+
+#### Folder Structure
+
+```
+src/
+├── core/               # Core application components and utilities
+│   ├── components/     # Shared components
+│   └── layouts/       # Main layouts
+├── modules/           # Application modules
+│   ├── auth/          # Authentication module
+│   ├── classes/       # Classes module
+│   ├── members/       # Members module
+│   └── ...
+└── shared/           # Shared utilities
+    ├── services/     # Shared services
+    └── types/        # Shared TypeScript types
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+#### Implemented Patterns
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Module Pattern**: Independent module organization
+- **Container/Presenter Pattern**: Separation of logic and presentation
+- **Render Props & Composition**: For reusable components
+- **Custom Hooks**: For reusable logic
+- **Service Layer Pattern**: For backend communication
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Backend (Laravel)
+
+- RESTful API with Laravel
+- Authentication using Laravel Sanctum (tokens and cookies)
+- MVC Architecture
+- Repository Pattern for data access
+
+## 🛠 Technologies and Dependencies
+
+### Frontend
+
+- **React**: Main framework
+- **TypeScript**: Static typing
+- **TailwindCSS**: Styling framework
+- **@tanstack/react-query**: Server state management and caching
+- **@headlessui/react**: Accessible UI components
+- **@heroicons/react**: SVG icons
+- **axios**: HTTP client
+- **react-router-dom**: Routing
+- **clsx**: Conditional class utility
+
+### Backend
+
+- **Laravel**: PHP framework
+- **Laravel Sanctum**: Authentication
+- **MySQL**: Database
+
+## 🚦 Development Status
+
+The project is in active development, with the following features implemented:
+
+- ✅ User authentication
+- ✅ Base modular structure
+- ✅ Responsive main layout
+- ✅ Classes module
+- 🚧 Members module (in development)
+- 🚧 Trainers module (in development)
+- 🚧 Reporting system (pending)
+
+## 🔒 Security
+
+- Cookie-based authentication with Laravel Sanctum
+- CSRF protection
+- Protected routes with AuthGuard
+- Form validation
+- Data sanitization
+
+## 💻 Project Setup
+
+### Prerequisites
+
+- Node.js >= 16.0.0
+- PHP >= 8.1
+- Composer
+- MySQL
+
+### Installation
+
+1. Clone the repository
+
+```bash
+git clone [repository-url]
 ```
+
+2. Install frontend dependencies
+
+```bash
+cd react-app
+npm install
+```
+
+3. Configure environment variables
+
+```bash
+cp .env.example .env
+```
+
+4. Start development server
+
+```bash
+npm run dev
+```
+
+## 🎨 Style Guide
+
+The project uses TailwindCSS with a custom design system:
+
+- Custom CSS variables for colors and themes
+- Reusable components
+- Responsive design
+- Built-in accessibility
+
+## 🤝 Contributing
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## 📞 Support
+
+For support and questions, please open an issue in the repository.
