@@ -90,7 +90,7 @@ export default function LoginForm() {
           <div>
             <button
               type="submit"
-              className="btn-primary w-full"
+              className="btn-primary w-full py-2"
               disabled={loginMutation.isPending}
             >
               {loginMutation.isPending ? (
