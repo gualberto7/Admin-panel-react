@@ -1,4 +1,4 @@
-import PageHeader from "../../../core/components/PageHeader";
+import PageHeader from "../../../shared/components/PageHeader";
 
 export default function MembersPage() {
   return (
