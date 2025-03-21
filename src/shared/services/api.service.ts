@@ -1,20 +1,23 @@
 import axios from "axios";
 import { API_BASE_URL } from "../../core/config/api.config";
+import Cookies from "js-cookie";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
     Accept: "application/json",
   },
+  withCredentials: true,
+  withXSRFToken: true,
 });
 
 // Request interceptor for API calls
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("access_token");
+    const token = Cookies.get("csrftoken");
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers["X-CSRFToken"] = token;
     }
     return config;
   },
@@ -31,7 +34,7 @@ api.interceptors.response.use(
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      localStorage.removeItem("access_token");
+      Cookies.remove("csrftoken");
       window.location.href = "/login";
     }
 
