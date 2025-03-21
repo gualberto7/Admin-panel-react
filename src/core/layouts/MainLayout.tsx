@@ -8,6 +8,7 @@ import {
   UserGroupIcon,
   CreditCardIcon,
   ChartBarIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
@@ -53,11 +54,17 @@ export default function MainLayout() {
                 leaveTo="-translate-x-full"
               >
                 <DialogPanel className="relative mr-16 flex w-full max-w-xs flex-1">
+                  <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
+                    <button type="button" className="-m-2.5 p-2.5" onClick={() => setSidebarOpen(false)}>
+                      <span className="sr-only">Close sidebar</span>
+                      <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                    </button>
+                  </div>
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
                     <div className="flex h-16 shrink-0 items-center">
                       <img
                         className="h-8 w-auto"
-                        src="/vite.svg"
+                        src="/logo.svg"
                         alt="GymAdmin"
                       />
                     </div>
@@ -71,16 +78,16 @@ export default function MainLayout() {
                                   to={item.href}
                                   className={clsx(
                                     location.pathname === item.href
-                                      ? 'bg-gray-50 text-primary-600'
-                                      : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50',
+                                      ? 'bg-[var(--color-gray-50)] text-[var(--color-primary-600)]'
+                                      : 'text-[var(--color-gray-700)] hover:text-[var(--color-primary-600)] hover:bg-[var(--color-gray-50)]',
                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                   )}
                                 >
                                   <item.icon
                                     className={clsx(
                                       location.pathname === item.href
-                                        ? 'text-primary-600'
-                                        : 'text-gray-400 group-hover:text-primary-600',
+                                        ? 'text-[var(--color-primary-600)]'
+                                        : 'text-[var(--color-gray-400)] group-hover:text-[var(--color-primary-600)]',
                                       'h-6 w-6 shrink-0'
                                     )}
                                     aria-hidden="true"
@@ -106,9 +113,10 @@ export default function MainLayout() {
             <div className="flex h-16 shrink-0 items-center">
               <img
                 className="h-8 w-auto"
-                src="/vite.svg"
+                src="/logo.svg"
                 alt="GymAdmin"
               />
+              <span className="ml-2 text-xl font-semibold text-gray-900">GymAdmin</span>
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -120,16 +128,16 @@ export default function MainLayout() {
                           to={item.href}
                           className={clsx(
                             location.pathname === item.href
-                              ? 'bg-gray-50 text-primary-600'
-                              : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50',
+                              ? 'bg-[var(--color-gray-50)] text-[var(--color-primary-600)]'
+                              : 'text-[var(--color-gray-700)] hover:text-[var(--color-primary-600)] hover:bg-[var(--color-gray-50)]',
                             'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                           )}
                         >
                           <item.icon
                             className={clsx(
                               location.pathname === item.href
-                                ? 'text-primary-600'
-                                : 'text-gray-400 group-hover:text-primary-600',
+                                ? 'text-[var(--color-primary-600)]'
+                                : 'text-[var(--color-gray-400)] group-hover:text-[var(--color-primary-600)]',
                               'h-6 w-6 shrink-0'
                             )}
                             aria-hidden="true"
@@ -156,11 +164,14 @@ export default function MainLayout() {
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </button>
 
-            {/* Separator */}
             <div className="h-6 w-px bg-gray-200 lg:hidden" aria-hidden="true" />
 
             <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-              <div className="flex flex-1" />
+              <div className="flex flex-1">
+                <h1 className="text-2xl font-semibold text-gray-900">
+                  {navigation.find(item => item.href === location.pathname)?.name || 'Dashboard'}
+                </h1>
+              </div>
             </div>
           </div>
 
