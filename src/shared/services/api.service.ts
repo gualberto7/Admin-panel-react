@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_BASE_URL } from "../../core/config/api.config";
 import Cookies from "js-cookie";
+import { navigationStore } from "./navigation.store";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -30,14 +31,12 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      Cookies.remove("csrftoken");
-      window.location.href = "/login";
+    if (error.response?.status === 401 || error.response?.status === 419) {
+      const navigate = navigationStore.getNavigate();
+      if (navigate) {
+        navigate("/login");
+      }
     }
-
     return Promise.reject(error);
   }
 );
