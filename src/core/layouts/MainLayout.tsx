@@ -178,8 +178,8 @@ export default function MainLayout() {
 
         <div className="lg:pl-72">
           <AppHeader user={profile} />
-          <main className="py-10">
-            <div className="px-4 sm:px-6 lg:px-8">
+          <main className="py-6">
+            <div className="px-4 sm:px-6 lg:px-6">
               <Outlet />
             </div>
           </main>

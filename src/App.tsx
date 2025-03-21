@@ -5,6 +5,7 @@ import ClassList from './modules/classes/components/ClassList';
 import LoginForm from './modules/auth/components/LoginForm';
 import AuthGuard from './modules/auth/components/AuthGuard';
 import { navigationStore } from './shared/services/navigation.store';
+import MembersPage from './modules/members/components/MembersPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,7 +36,7 @@ function App() {
           <Route element={<AuthGuard />}>
             <Route element={<MainLayout />}>
               <Route index element={<div>Dashboard</div>} />
-              <Route path="members" element={<div>Members</div>} />
+              <Route path="members" element={<MembersPage />} />
               <Route path="classes" element={<ClassList />} />
               <Route path="trainers" element={<div>Trainers</div>} />
               <Route path="subscriptions" element={<div>Subscriptions</div>} />
