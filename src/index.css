@@ -1,3 +1,19 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    @apply h-full bg-gray-50;
+  }
+  body {
+    @apply h-full font-sans antialiased;
+  }
+  #root {
+    @apply h-full;
+  }
+}
+
+@plugin "@tailwindcss/forms";
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
