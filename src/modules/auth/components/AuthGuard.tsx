@@ -1,28 +1,25 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { authService } from '../services/auth.service';
+import { useAuthStore } from '../store/auth.store';
 
 export default function AuthGuard() {
   const navigate = useNavigate();
   const location = useLocation();
-  const queryClient = useQueryClient();
-  
-  const { data: profile, isLoading, error } = useQuery({
-    queryKey: ['auth-profile'],
-    queryFn: async () => {
-      const response = await authService.getProfile();
-      return response.data.user;
-    },
-    retry: false,
-  });
+  const { user, isLoading, error, getProfile } = useAuthStore();
+
+  useEffect(() => {
+    if (!user && location.pathname !== '/login') {
+      getProfile().catch(() => {
+        navigate('/login');
+      });
+    }
+  }, [user, location.pathname, navigate, getProfile]);
 
   useEffect(() => {
     if (error && location.pathname !== '/login') {
-      queryClient.clear();
       navigate('/login');
     }
-  }, [error, location.pathname, navigate, queryClient]);
+  }, [error, location.pathname, navigate]);
 
   if (isLoading) {
     return (
@@ -32,7 +29,7 @@ export default function AuthGuard() {
     );
   }
 
-  if (!profile && location.pathname !== '/login') {
+  if (!user && location.pathname !== '/login') {
     return null;
   }
 

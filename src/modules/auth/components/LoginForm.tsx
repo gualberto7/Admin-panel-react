@@ -1,29 +1,24 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { authService } from '../services/auth.service';
+import { useAuthStore } from '../store/auth.store';
 import type { LoginCredentials } from '../types/auth.types';
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const { login, isLoading, error } = useAuthStore();
   const [credentials, setCredentials] = useState<LoginCredentials>({
     email: '',
     password: '',
   });
 
-  const loginMutation = useMutation({
-    mutationFn: async (credentials: LoginCredentials) => {
-      const response = await authService.login(credentials);
-      return response.data;
-    },
-    onSuccess: () => {
-      navigate('/');
-    },
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    loginMutation.mutate(credentials);
+    try {
+      await login(credentials);
+      navigate('/');
+    } catch (err) {
+      // Error is handled by the store
+    }
   };
 
   return (
@@ -41,10 +36,10 @@ export default function LoginForm() {
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {loginMutation.error && (
+          {error && (
             <div className="rounded-md bg-[var(--color-error-50)] p-4">
               <div className="text-sm text-[var(--color-error-600)]">
-                Credenciales inválidas. Por favor, intenta de nuevo.
+                {error}
               </div>
             </div>
           )}
@@ -91,9 +86,9 @@ export default function LoginForm() {
             <button
               type="submit"
               className="btn-primary w-full py-2"
-              disabled={loginMutation.isPending}
+              disabled={isLoading}
             >
-              {loginMutation.isPending ? (
+              {isLoading ? (
                 <div className="flex items-center justify-center">
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
                 </div>
