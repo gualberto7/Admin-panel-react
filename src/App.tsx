@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import MainLayout from './core/layouts/MainLayout';
-import ClassList from './modules/classes/components/ClassList';
-import LoginForm from './modules/auth/components/LoginForm';
-import AuthGuard from './modules/auth/components/AuthGuard';
-import { navigationStore } from './shared/services/navigation.store';
-import MembersPage from './modules/members/components/MembersPage';
+import MainLayout from '@/core/layouts/MainLayout';
+import ClassList from '@/modules/classes/components/ClassList';
+import LoginForm from '@/modules/auth/components/LoginForm';
+import AuthGuard from '@/modules/auth/components/AuthGuard';
+import { navigationStore } from '@/shared/services/navigation.store';
+import MembersPage from '@/modules/members/components/MembersPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
