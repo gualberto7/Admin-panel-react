@@ -26,7 +26,7 @@ export const authService = {
 
   logout: () => api.post(`logout`),
 
-  getProfile: () => api.get<User>(`api/user`),
+  getProfile: () => api.get<{ user: User }>(`api/me`),
 
   // Local storage management
   /*setToken: (token: string) => {

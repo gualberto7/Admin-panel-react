@@ -12,7 +12,7 @@ export default function AuthGuard() {
     queryKey: ['auth-profile'],
     queryFn: async () => {
       const response = await authService.getProfile();
-      return response.data;
+      return response.data.user;
     },
     retry: false,
   });

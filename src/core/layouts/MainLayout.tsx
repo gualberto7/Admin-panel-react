@@ -32,7 +32,7 @@ export default function MainLayout() {
     queryKey: ['auth-profile'],
     queryFn: async () => {
       const response = await authService.getProfile();
-      return response.data;
+      return response.data.user;
     },
   });
 
