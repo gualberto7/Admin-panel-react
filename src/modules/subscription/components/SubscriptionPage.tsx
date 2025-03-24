@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useGymStore } from "@/modules/gym/store/gym.store";
 import { subscriptionService } from "../services/subscription.service";
 import PageHeader from "@/shared/components/PageHeader";
-
+import Card from "@/shared/components/Card";
 export default function SubscriptionPage() {
   const { selectedGym } = useGymStore();
 
@@ -30,12 +30,12 @@ export default function SubscriptionPage() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
-      <div className="sm:flex sm:items-center">
+      <div className="sm:flex sm:items-center mb-4">
         <PageHeader title="Suscripciones">
           <button className="btn-primary">Agregar suscripción</button>
         </PageHeader>
       </div>
-      <div className="mt-8 flow-root">
+      <Card>
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
@@ -107,7 +107,7 @@ export default function SubscriptionPage() {
             </div>
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }
