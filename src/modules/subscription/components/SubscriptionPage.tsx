@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useGymStore } from "@/modules/gym/store/gym.store";
 import { subscriptionService } from "../services/subscription.service";
+import PageHeader from "@/shared/components/PageHeader";
 
 export default function SubscriptionPage() {
   const { selectedGym } = useGymStore();
@@ -30,22 +31,9 @@ export default function SubscriptionPage() {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
-        <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold leading-6 text-[var(--color-gray-900)]">
-            Suscripciones
-          </h1>
-          <p className="mt-2 text-sm text-[var(--color-gray-700)]">
-            Lista de suscripciones disponibles para {selectedGym.name}
-          </p>
-        </div>
-        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <button
-            type="button"
-            className="btn-primary"
-          >
-            Agregar suscripción
-          </button>
-        </div>
+        <PageHeader title="Suscripciones">
+          <button className="btn-primary">Agregar suscripción</button>
+        </PageHeader>
       </div>
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
