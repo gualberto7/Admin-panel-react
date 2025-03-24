@@ -4,6 +4,9 @@ import { subscriptionService } from "../services/subscription.service";
 import PageHeader from "@/shared/components/PageHeader";
 import Card from "@/shared/components/Card";
 import Subscriptions from "./Subscriptions";
+import Button from "@/shared/components/Button";
+import { PlusIcon } from "@heroicons/react/24/outline";
+
 export default function SubscriptionPage() {
   const { selectedGym } = useGymStore();
 
@@ -33,7 +36,9 @@ export default function SubscriptionPage() {
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center mb-4">
         <PageHeader title="Suscripciones">
-          <button className="btn-primary">Agregar suscripción</button>
+          <Button leftIcon={<PlusIcon className="h-5 w-5" />}>
+            Agregar suscripción
+          </Button>
         </PageHeader>
       </div>
       <Card>
