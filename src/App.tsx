@@ -6,6 +6,7 @@ import LoginForm from '@/modules/auth/components/LoginForm';
 import AuthGuard from '@/modules/auth/components/AuthGuard';
 import { navigationStore } from '@/shared/services/navigation.store';
 import SubscriptionPage from './modules/subscription/components/SubscriptionPage';
+import SubscriptionForm from './modules/subscription/components/SubscriptionForm';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,6 +38,7 @@ function App() {
             <Route element={<MainLayout />}>
               <Route index element={<div>Dashboard</div>} />
               <Route path="subscriptions" element={<SubscriptionPage />} />
+              <Route path="subscriptions/create" element={<SubscriptionForm />} />
               <Route path="classes" element={<ClassList />} />
               <Route path="trainers" element={<div>Trainers</div>} />
               <Route path="memberships" element={<div>Membresias</div>} />

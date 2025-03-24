@@ -5,10 +5,12 @@ import { Button, Card, PageHeader } from "@/shared/components";
 import Subscriptions from "./Subscriptions";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SubscriptionPage() {
   const { selectedGym } = useGymStore();
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
 
   const { data: subscriptions, isLoading } = useQuery({
     queryKey: ["subscriptions", selectedGym?.id, page],
@@ -26,9 +28,9 @@ export default function SubscriptionPage() {
 
   return (
     <div className="sm:px-6">
-      <div className="sm:flex sm:items-center mb-4">
+      <div className="sm:flex sm:items-center">
         <PageHeader title="Suscripciones">
-          <Button leftIcon={<PlusIcon className="h-5 w-5" />}>
+          <Button leftIcon={<PlusIcon className="h-5 w-5" />} onClick={() => navigate("/subscriptions/create")}>
             Agregar suscripción
           </Button>
         </PageHeader>
