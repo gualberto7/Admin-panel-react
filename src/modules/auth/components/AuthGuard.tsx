@@ -7,8 +7,6 @@ export default function AuthGuard() {
   const location = useLocation();
   const { user, isLoading, error, getProfile } = useAuthStore();
 
-  console.log("user", user);
-
   useEffect(() => {
     const hasToken = document.cookie.includes('csrftoken');
     
