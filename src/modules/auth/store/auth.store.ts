@@ -7,12 +7,10 @@ import type {
   RegisterData,
   User,
 } from "../types/auth.types";
-import type { Gym } from "@/modules/gym/types/gym.types";
+import { useGymStore } from "@/modules/gym/store/gym.store";
 
 interface AuthStore extends AuthState {
-  gyms: Gym[];
   setUser: (user: User | null) => void;
-  setGyms: (gyms: Gym[]) => void;
   setIsLoading: (isLoading: boolean) => void;
   setError: (error: string | null) => void;
   login: (credentials: LoginCredentials) => Promise<void>;
@@ -26,7 +24,6 @@ export const useAuthStore = create<AuthStore>()(
     persist(
       (set) => ({
         user: null,
-        gyms: [],
         isAuthenticated: false,
         isLoading: false,
         error: null,
@@ -36,18 +33,23 @@ export const useAuthStore = create<AuthStore>()(
             isAuthenticated: !!user,
             error: null,
           }),
-        setGyms: (gyms) => set({ gyms }),
         setIsLoading: (isLoading) => set({ isLoading }),
         setError: (error) => set({ error }),
         login: async (credentials) => {
           try {
             set({ isLoading: true, error: null });
-            const response = await authService.login(credentials);
+            await authService.login(credentials);
+            const response = await authService.getProfile();
+
+            // Update auth store
             set({
               user: response.data.user,
               isAuthenticated: true,
               isLoading: false,
             });
+
+            // Update gym store
+            useGymStore.getState().setGyms(response.data.gyms);
           } catch (error) {
             set({
               error: "Error al iniciar sesión",
@@ -60,11 +62,19 @@ export const useAuthStore = create<AuthStore>()(
           try {
             set({ isLoading: true, error: null });
             const response = await authService.register(data);
+            console.log("response", response);
+
+            // Update auth store
             set({
               user: response.data.user,
               isAuthenticated: true,
               isLoading: false,
             });
+
+            // Update gym store if gyms are returned in register response
+            if (response.data.gyms) {
+              useGymStore.getState().setGyms(response.data.gyms);
+            }
           } catch (error) {
             set({
               error: "Error al registrar usuario",
@@ -77,12 +87,17 @@ export const useAuthStore = create<AuthStore>()(
           try {
             set({ isLoading: true, error: null });
             await authService.logout();
+
+            // Update auth store
             set({
               user: null,
-              gyms: [],
               isAuthenticated: false,
               isLoading: false,
             });
+
+            // Clear gym store
+            useGymStore.getState().setGyms([]);
+            useGymStore.getState().setSelectedGym(null);
           } catch (error) {
             set({
               error: "Error al cerrar sesión",
@@ -95,12 +110,16 @@ export const useAuthStore = create<AuthStore>()(
           try {
             set({ isLoading: true, error: null });
             const response = await authService.getProfile();
+
+            // Update auth store
             set({
               user: response.data.user,
-              gyms: response.data.gyms,
               isAuthenticated: true,
               isLoading: false,
             });
+
+            // Update gym store
+            useGymStore.getState().setGyms(response.data.gyms);
           } catch (error) {
             set({
               error: "Error al obtener perfil",

@@ -13,7 +13,7 @@ export const authService = {
 
   login: async (credentials: LoginCredentials) => {
     await authService.getCsrf();
-    return api.post<AuthResponse>(`login`, credentials);
+    return api.post(`login`, credentials);
   },
 
   register: async (data: RegisterData) => {

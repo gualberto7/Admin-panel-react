@@ -1,3 +1,5 @@
+import type { Gym } from "@/modules/gym/types/gym.types";
+
 export interface LoginCredentials {
   email: string;
   password: string;
@@ -19,6 +21,7 @@ export interface User {
 
 export interface AuthResponse {
   user: User;
+  gyms?: Gym[];
 }
 
 export interface AuthState {
