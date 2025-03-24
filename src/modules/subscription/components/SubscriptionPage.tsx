@@ -31,7 +31,7 @@ export default function SubscriptionPage() {
   }
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
+    <div className="sm:px-6">
       <div className="sm:flex sm:items-center mb-4">
         <PageHeader title="Suscripciones">
           <Button leftIcon={<PlusIcon className="h-5 w-5" />}>
