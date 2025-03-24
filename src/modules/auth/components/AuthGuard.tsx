@@ -7,8 +7,12 @@ export default function AuthGuard() {
   const location = useLocation();
   const { user, isLoading, error, getProfile } = useAuthStore();
 
+  console.log("user", user);
+
   useEffect(() => {
-    if (!user && location.pathname !== '/login') {
+    const hasToken = document.cookie.includes('csrftoken');
+    
+    if (!user && hasToken && location.pathname !== '/login') {
       getProfile().catch(() => {
         navigate('/login');
       });

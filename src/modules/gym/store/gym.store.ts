@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import type { Gym } from "../types/gym.types";
 
 interface GymState {
@@ -18,25 +18,32 @@ interface GymStore extends GymState {
 
 export const useGymStore = create<GymStore>()(
   devtools(
-    (set) => ({
-      gyms: [],
-      selectedGym: null,
-      isLoading: false,
-      error: null,
-      setGyms: (gyms) => {
-        set({ gyms });
-        set({ selectedGym: gyms[0] });
-      },
-      setSelectedGym: (gym) =>
-        set({
-          selectedGym: gym,
-          error: null,
+    persist(
+      (set) => ({
+        gyms: [],
+        selectedGym: null,
+        isLoading: false,
+        error: null,
+        setGyms: (gyms) => {
+          set({ gyms });
+          set((state) => ({
+            selectedGym: state.selectedGym || gyms[0] || null,
+          }));
+        },
+        setSelectedGym: (gym) =>
+          set({
+            selectedGym: gym,
+            error: null,
+          }),
+        setIsLoading: (isLoading) => set({ isLoading }),
+        setError: (error) => set({ error }),
+      }),
+      {
+        name: "gym-storage",
+        partialize: (state) => ({
+          selectedGym: state.selectedGym,
         }),
-      setIsLoading: (isLoading) => set({ isLoading }),
-      setError: (error) => set({ error }),
-    }),
-    {
-      name: "gym-store",
-    }
+      }
+    )
   )
 );

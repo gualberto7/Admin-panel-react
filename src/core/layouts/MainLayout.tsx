@@ -10,8 +10,6 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { authService } from '../../modules/auth/services/auth.service';
 import AppHeader from '../components/AppHeader';
 import clsx from 'clsx';
 
@@ -27,14 +25,6 @@ const navigation = [
 export default function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
-
-  const { data: profile } = useQuery({
-    queryKey: ['auth-profile'],
-    queryFn: async () => {
-      const response = await authService.getProfile();
-      return response.data.user;
-    },
-  });
 
   useEffect(() => {
     const handleToggleSidebar = () => setSidebarOpen(true);
@@ -177,7 +167,7 @@ export default function MainLayout() {
         </div>
 
         <div className="lg:pl-72">
-          <AppHeader user={profile} />
+          <AppHeader />
           <main className="py-6">
             <div className="px-4 sm:px-6 lg:px-6">
               <Outlet />

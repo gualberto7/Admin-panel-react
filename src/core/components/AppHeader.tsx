@@ -9,18 +9,14 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { authService } from '../../modules/auth/services/auth.service';
-import type { User } from '../../modules/auth/types/auth.types';
 import clsx from 'clsx';
+import { useAuthStore } from '@/modules/auth/store/auth.store';
 
-interface AppHeaderProps {
-  user: User | null | undefined;
-}
-
-export default function AppHeader({ user }: AppHeaderProps) {
+export default function AppHeader() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState('');
-
+  const { user } = useAuthStore();
   const logoutMutation = useMutation({
     mutationFn: () => authService.logout(),
     onSuccess: () => {
