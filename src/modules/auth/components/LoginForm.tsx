@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/auth.store';
 import type { LoginCredentials } from '../types/auth.types';
+import { Button } from '@/shared/components';
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -83,19 +84,9 @@ export default function LoginForm() {
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="btn-primary w-full py-2"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
-                </div>
-              ) : (
-                'Iniciar sesión'
-              )}
-            </button>
+            <Button type="submit" disabled={isLoading} fullWidth>
+              Iniciar sesión
+            </Button>
           </div>
         </form>
       </div>
