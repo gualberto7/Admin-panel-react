@@ -17,10 +17,10 @@ import clsx from 'clsx';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: HomeIcon },
-  { name: 'Miembros', href: '/members', icon: UsersIcon },
+  { name: 'Clientes', href: '/subscriptions', icon: UsersIcon },
   { name: 'Clases', href: '/classes', icon: CalendarIcon },
   { name: 'Entrenadores', href: '/trainers', icon: UserGroupIcon },
-  { name: 'Membresías', href: '/subscriptions', icon: CreditCardIcon },
+  { name: 'Membresías', href: '/memberships', icon: CreditCardIcon },
   { name: 'Reportes', href: '/reports', icon: ChartBarIcon },
 ];
 
