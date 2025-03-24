@@ -1,5 +1,5 @@
 import { useState, Fragment } from 'react';
-import { Menu, Transition } from '@headlessui/react';
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { 
   UserCircleIcon,
@@ -76,20 +76,21 @@ export default function AppHeader() {
 
         <div className="flex items-center gap-x-4 lg:gap-x-6">
           <Menu as="div" className="relative">
-            <Menu.Button className="-m-1.5 flex items-center p-1.5">
+            <MenuButton className="-m-1.5 flex items-center p-1.5 gap-x-2">
+              <span className="text-sm font-medium text-[var(--color-gray-600)]">{ user?.name }</span>
               <span className="sr-only">Abrir menú de usuario</span>
               {user?.avatar ? (
                 <img
                   className="h-8 w-8 rounded-full bg-[var(--color-gray-50)]"
                   src={user.avatar}
-                  alt=""
+                  alt={user.name}
                 />
               ) : (
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-primary-100)] text-sm font-medium text-[var(--color-primary-600)]">
                   {user?.name ? getUserInitials(user.name) : '??'}
                 </div>
               )}
-            </Menu.Button>
+            </MenuButton>
             <Transition
               as={Fragment}
               enter="transition ease-out duration-100"
@@ -99,8 +100,8 @@ export default function AppHeader() {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-[var(--color-gray-900)]/5 focus:outline-none">
-                <Menu.Item>
+              <MenuItems className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-[var(--color-gray-900)]/5 focus:outline-none">
+                <MenuItem>
                   {({ active }) => (
                     <a
                       href="#"
@@ -115,8 +116,8 @@ export default function AppHeader() {
                       </div>
                     </a>
                   )}
-                </Menu.Item>
-                <Menu.Item>
+                </MenuItem>
+                <MenuItem>
                   {({ active }) => (
                     <a
                       href="#"
@@ -131,8 +132,8 @@ export default function AppHeader() {
                       </div>
                     </a>
                   )}
-                </Menu.Item>
-                <Menu.Item>
+                </MenuItem>
+                <MenuItem>
                   {({ active }) => (
                     <button
                       onClick={handleLogout}
@@ -147,8 +148,8 @@ export default function AppHeader() {
                       </div>
                     </button>
                   )}
-                </Menu.Item>
-              </Menu.Items>
+                </MenuItem>
+              </MenuItems>
             </Transition>
           </Menu>
         </div>
