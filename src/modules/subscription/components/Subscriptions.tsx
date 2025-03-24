@@ -1,11 +1,13 @@
 import { Table } from "@/shared/components";
 import type { Subscription } from "../types/subscription.types";
+import type { PaginatedResponse } from "@/shared/types/pagination.types";
 
 interface SubscriptionsProps {
-  subscriptions: Subscription[];
+  subscriptions: PaginatedResponse<Subscription>;
+  onPageChange: (page: number) => void;
 }
 
-export default function Subscriptions({ subscriptions }: SubscriptionsProps) {
+export default function Subscriptions({ subscriptions, onPageChange }: SubscriptionsProps) {
   const columns = [
     {
       key: "member",
@@ -32,8 +34,12 @@ export default function Subscriptions({ subscriptions }: SubscriptionsProps) {
   return (
     <Table
       columns={columns}
-      data={subscriptions}
+      data={subscriptions.data}
       emptyMessage="No hay suscripciones disponibles"
+      pagination={{
+        meta: subscriptions.meta,
+        onPageChange,
+      }}
     />
   );
 }

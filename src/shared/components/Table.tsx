@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import clsx from "clsx";
+import Pagination from "./Pagination";
+import type { PaginationMeta } from "../types/pagination.types";
 
 interface Column<T> {
   key: keyof T | string;
@@ -12,6 +14,10 @@ interface TableProps<T> {
   data: T[];
   className?: string;
   emptyMessage?: string;
+  pagination?: {
+    meta: PaginationMeta;
+    onPageChange: (page: number) => void;
+  };
 }
 
 export default function Table<T>({
@@ -19,6 +25,7 @@ export default function Table<T>({
   data,
   className,
   emptyMessage = "No hay datos disponibles",
+  pagination,
 }: TableProps<T>) {
   return (
     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -64,6 +71,12 @@ export default function Table<T>({
               )}
             </tbody>
           </table>
+          {pagination && (
+            <Pagination
+              meta={pagination.meta}
+              onPageChange={pagination.onPageChange}
+            />
+          )}
         </div>
       </div>
     </div>
