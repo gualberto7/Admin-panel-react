@@ -1,10 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useGymStore } from "@/modules/gym/store/gym.store";
 import { subscriptionService } from "../services/subscription.service";
-import PageHeader from "@/shared/components/PageHeader";
-import Card from "@/shared/components/Card";
+import { Button, Card, PageHeader } from "@/shared/components";
 import Subscriptions from "./Subscriptions";
-import Button from "@/shared/components/Button";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 export default function SubscriptionPage() {
