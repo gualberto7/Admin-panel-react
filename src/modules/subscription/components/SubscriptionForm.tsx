@@ -39,10 +39,10 @@ export default function SubscriptionForm() {
         >
           {() => (
             <>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Field
                   name="member_id"
-                  label="Miembro"
+                  label="Cliente"
                   placeholder="Buscar por CI"
                 />
 
@@ -50,7 +50,7 @@ export default function SubscriptionForm() {
                   <option value="">Selecciona una membresía</option>
                   {memberships?.map((membership) => (
                     <option key={membership.id} value={membership.id}>
-                      {membership.name}
+                      {membership.name} - {membership.price} Bs.
                     </option>
                   ))}
                 </SelectWrapper>
