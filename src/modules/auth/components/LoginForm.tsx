@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '../store/auth.store';
-import type { LoginCredentials } from '../types/auth.types';
-import { Button } from '@/shared/components';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/auth.store";
+import type { LoginCredentials } from "../types/auth.types";
+import { Button } from "@/shared/components";
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const { login, isLoading, error } = useAuthStore();
   const [credentials, setCredentials] = useState<LoginCredentials>({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await login(credentials);
-      navigate('/');
+      navigate("/");
     } catch (err) {
       // Error is handled by the store
     }
@@ -30,15 +30,26 @@ export default function LoginForm() {
             className="mx-auto h-12 w-auto"
             src="/logo.svg"
             alt="GymAdmin"
+            data-testid="logo"
           />
-          <h2 className="mt-6 text-center text-3xl font-bold text-[var(--color-gray-900)]">
+          <h2
+            className="mt-6 text-center text-3xl font-bold text-[var(--color-gray-900)]"
+            data-testid="login-title"
+          >
             Iniciar sesión
           </h2>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form
+          className="mt-8 space-y-6"
+          onSubmit={handleSubmit}
+          data-testid="login-form"
+        >
           {error && (
-            <div className="rounded-md bg-[var(--color-error-50)] p-4">
+            <div
+              className="rounded-md bg-[var(--color-error-50)] p-4"
+              data-testid="error-message"
+            >
               <div className="text-sm text-[var(--color-error-600)]">
                 {error}
               </div>
@@ -61,6 +72,7 @@ export default function LoginForm() {
                 onChange={(e) =>
                   setCredentials({ ...credentials, email: e.target.value })
                 }
+                data-testid="email-input"
               />
             </div>
 
@@ -79,12 +91,18 @@ export default function LoginForm() {
                 onChange={(e) =>
                   setCredentials({ ...credentials, password: e.target.value })
                 }
+                data-testid="password-input"
               />
             </div>
           </div>
 
           <div>
-            <Button type="submit" disabled={isLoading} fullWidth>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              fullWidth
+              data-testid="submit-button"
+            >
               Iniciar sesión
             </Button>
           </div>
@@ -92,4 +110,4 @@ export default function LoginForm() {
       </div>
     </div>
   );
-} 
+}

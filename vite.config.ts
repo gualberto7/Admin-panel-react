@@ -10,4 +10,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  esbuild: {
+    drop: ["console", "debugger"],
+    pure: ["data-testid"],
+  },
 });

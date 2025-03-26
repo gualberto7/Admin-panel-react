@@ -37,14 +37,12 @@ describe("LoginForm", () => {
       </BrowserRouter>
     );
 
-    expect(
-      screen.getByRole("heading", { name: /iniciar sesión/i })
-    ).toBeInTheDocument();
-    expect(screen.getByLabelText(/correo electrónico/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/contraseña/i)).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /iniciar sesión/i })
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("logo")).toBeInTheDocument();
+    expect(screen.getByTestId("login-title")).toBeInTheDocument();
+    expect(screen.getByTestId("login-form")).toBeInTheDocument();
+    expect(screen.getByTestId("email-input")).toBeInTheDocument();
+    expect(screen.getByTestId("password-input")).toBeInTheDocument();
+    expect(screen.getByTestId("submit-button")).toBeInTheDocument();
   });
 
   it("handles form submission", async () => {
@@ -54,11 +52,9 @@ describe("LoginForm", () => {
       </BrowserRouter>
     );
 
-    const emailInput = screen.getByLabelText(/correo electrónico/i);
-    const passwordInput = screen.getByLabelText(/contraseña/i);
-    const submitButton = screen.getByRole("button", {
-      name: /iniciar sesión/i,
-    });
+    const emailInput = screen.getByTestId("email-input");
+    const passwordInput = screen.getByTestId("password-input");
+    const submitButton = screen.getByTestId("submit-button");
 
     fireEvent.change(emailInput, { target: { value: "test@example.com" } });
     fireEvent.change(passwordInput, { target: { value: "password123" } });
@@ -86,6 +82,7 @@ describe("LoginForm", () => {
       </BrowserRouter>
     );
 
+    expect(screen.getByTestId("error-message")).toBeInTheDocument();
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
   });
 
@@ -102,8 +99,6 @@ describe("LoginForm", () => {
       </BrowserRouter>
     );
 
-    expect(
-      screen.getByRole("button", { name: /iniciar sesión/i })
-    ).toBeDisabled();
+    expect(screen.getByTestId("submit-button")).toBeDisabled();
   });
 });
