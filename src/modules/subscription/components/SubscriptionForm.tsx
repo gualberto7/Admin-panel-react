@@ -4,10 +4,11 @@ import { useGymStore } from "@/modules/gym/store/gym.store";
 import { Button, Card, Form, PageHeader } from "@/shared/components";
 import { useFormField } from "@/shared/components/form/useFormField";
 import FormField, { SelectField } from "@/shared/components/form/FormField";
+import SearchField from "@/shared/components/form/SearchField";
 import { membershipService } from "@/modules/membership/services/membership.service";
 
 const subscriptionSchema = z.object({
-  member_id: z.string().min(1, "El nombre es requerido"),
+  member_id: z.string().min(1, "El miembro es requerido"),
   membership_id: z.string().min(1, "La membresía es requerida"),
   start_date: z.string().min(1, "La fecha de inicio es requerida"),
   end_date: z.string().min(1, "La fecha de fin es requerida"),
@@ -40,7 +41,7 @@ export default function SubscriptionForm() {
           {() => (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Field
+                <SearchWrapper
                   name="member_id"
                   label="Cliente"
                   placeholder="Buscar por CI"
@@ -87,4 +88,23 @@ function SelectWrapper({
 >) {
   const { field, error } = useFormField(name);
   return <SelectField {...field} error={error} {...props} />;
+}
+
+function SearchWrapper({
+  name,
+  ...props
+}: { name: keyof SubscriptionFormData } & React.ComponentProps<
+  typeof SearchField
+>) {
+  const { field, error, form } = useFormField(name);
+  return (
+    <SearchField
+      {...field}
+      error={error}
+      onSelect={(value) => form.setValue(name, value)}
+      value={form.watch(name) || ""}
+      onChange={(e) => field.onChange(e)}
+      {...props}
+    />
+  );
 }
